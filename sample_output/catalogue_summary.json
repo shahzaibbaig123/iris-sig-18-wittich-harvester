@@ -1,0 +1,49 @@
+{
+ "created_at": "2026-10-28T15:14:07+00:00",
+ "titles_found": 1490,
+ "in_scope": 741,
+ "in_scope_by_state": {
+  "RP": 155,
+  "HE": 264,
+  "TH": 155,
+  "SN": 167
+ },
+ "excluded_by_reason": {
+  "excluded_title": 335,
+  "out_of_state_scope": 365,
+  "excluded_frequency": 49
+ },
+ "postcode_queries": 279,
+ "saturated_prefixes_narrowed": [
+  "01",
+  "02",
+  "04",
+  "06",
+  "07",
+  "08",
+  "34",
+  "35",
+  "36",
+  "37",
+  "54",
+  "55",
+  "66",
+  "67",
+  "96",
+  "98",
+  "99",
+  "018",
+  "048",
+  "049",
+  "342",
+  "343",
+  "361",
+  "362",
+  "363"
+ ],
+ "overview_titles_in_scope": 119,
+ "overview_titles_found_by_sweep": 117,
+ "warnings": [
+  "prefix 3616 returned 40 titles at the maximum prefix length; titles may be missing"
+ ]
+}

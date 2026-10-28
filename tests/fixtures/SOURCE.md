@@ -20,8 +20,15 @@ query strings were used.
 | `pages/toc_1329_empty.html` | `/titel/1329` | redirects to `/ausgabe/0/1900`: no online edition |
 | `pages/art_<articleId>.html` | `/titel/{id}/ausgabe/{nr}/{year}/artikel/{articleId}` | every notice of the three issues, plus the first article of 2701 for its manifest |
 | `routes.json` (`/internal/neuste/ausgabe/*`) | `/internal/neuste/ausgabe/{id}` | the four JSON answers, stored verbatim |
+| `epaper/viewer_1391.html` | `https://epaper.wittich.de/frontend/mvc/catalog/by-name/1391/newest` | viewer page with complete-issue download enabled; stored as captured (config only, no personal data) |
+| `epaper/viewer_1329_preview.html` | `https://epaper.wittich.de/frontend/mvc/catalog/by-name/1329/newest` | preview catalogue, download disabled; served for 1329 in `routes.json` |
 
-`routes.json` maps each URL path to its file for `FixtureTransport`.
+The PDF used in `tests/test_epaper.py` is **synthetic**: the test builds it,
+with the typography of a real issue. No real PDF is stored, because issues
+contain advertisements and private persons' names.
+
+`routes.json` maps each URL path to its file for `FixtureTransport`. Keys are
+paths only, so `/robots.txt` answers for every host.
 `offline.toml` limits discovery and harvesting to those routes.
 
 ## Changes made to the captured pages

@@ -1,0 +1,13 @@
+# wittich-harvester validate, run against the database after the two live runs of 2026-10-28
+# (49 rows: RP 9, TH 13, SN 26 from ol.wittich.de; HE 1 from the e-paper PDF route)
+duplicate_source_keys                         ok
+geometry_srid_validity_envelope               ok
+geometry_matches_geo_status                   ok
+point_outside_its_state                       ok
+ars_not_in_state                              ok
+required_fields_missing                       ok
+missing_date_not_flagged                      ok
+published_on_implausible                      ok
+content_hash_malformed                        ok
+runs_left_running                             ok
+unresolved_locations_without_note             ok

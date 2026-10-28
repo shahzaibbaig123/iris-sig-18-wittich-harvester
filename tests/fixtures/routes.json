@@ -1,5 +1,5 @@
 {
- "_comment": "URL path -> canned response for FixtureTransport (wittich-harvester --offline and tests).",
+ "_comment": "URL path -> canned response for FixtureTransport (wittich-harvester --offline and tests). Keys are paths only: /robots.txt answers for every host.",
  "routes": {
   "/robots.txt": {
    "file": "robots/ol_robots.txt",
@@ -135,6 +135,9 @@
   },
   "/titel/130/ausgabe/43/2026/artikel/00000000000055321389-OL-130-2026-43-43-0": {
    "file": "pages/art_00000000000055321389-OL-130-2026-43-43-0.html"
+  },
+  "/frontend/mvc/catalog/by-name/1329/newest": {
+   "file": "epaper/viewer_1329_preview.html"
   }
  }
 }

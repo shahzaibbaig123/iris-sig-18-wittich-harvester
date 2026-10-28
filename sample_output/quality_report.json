@@ -1,18 +1,18 @@
 {
  "run": {
-  "run_id": "8e747487-92fa-479b-964c-84107c711409",
+  "run_id": "7332c0c0-0ff2-42ac-8285-b8ce2ab06b65",
   "mode": "live",
   "status": "succeeded",
-  "started_at": "2026-10-28T13:50:35+00:00",
-  "finished_at": "2026-10-28T13:51:51+00:00",
-  "http_requests": 82,
-  "loaded_to_database": false
+  "started_at": "2026-10-28T15:20:54+00:00",
+  "finished_at": "2026-10-28T15:22:22+00:00",
+  "http_requests": 86,
+  "loaded_to_database": true
  },
  "titles": {
-  "harvested": 9,
+  "harvested": 11,
   "by_status": {
-   "ok": 7,
-   "no_online_edition": 2
+   "ok": 9,
+   "download_disabled": 2
   },
   "stale": [],
   "detail": [
@@ -22,18 +22,19 @@
     "state_code": "RP",
     "ars": "073345001",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "43/2026",
     "issues_processed": [
      "43/2026"
     ],
     "issues_failed": [],
-    "articles_seen": 59,
+    "articles_seen": 61,
     "notices": 5,
     "records": 5,
     "errors": 0,
     "warnings": 1,
-    "inserted": 0,
+    "inserted": 5,
     "updated": 0,
     "unchanged": 0
    },
@@ -43,6 +44,7 @@
     "state_code": "RP",
     "ars": "073345003",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "43/2026",
     "issues_processed": [
@@ -54,7 +56,7 @@
     "records": 4,
     "errors": 0,
     "warnings": 1,
-    "inserted": 0,
+    "inserted": 4,
     "updated": 0,
     "unchanged": 0
    },
@@ -63,12 +65,15 @@
     "name": "Wörth",
     "state_code": "RP",
     "ars": "073340501",
-    "status": "no_online_edition",
+    "status": "ok",
+    "route": "epaper",
     "stale": false,
-    "newest_issue": null,
-    "issues_processed": [],
+    "newest_issue": "40/2026",
+    "issues_processed": [
+     "40/2026"
+    ],
     "issues_failed": [],
-    "articles_seen": 0,
+    "articles_seen": 20,
     "notices": 0,
     "records": 0,
     "errors": 0,
@@ -82,17 +87,60 @@
     "name": "Fuldatal",
     "state_code": "HE",
     "ars": "066330009009",
-    "status": "no_online_edition",
+    "status": "download_disabled",
+    "route": "epaper",
     "stale": false,
-    "newest_issue": null,
+    "newest_issue": "43/2026",
     "issues_processed": [],
     "issues_failed": [],
     "articles_seen": 0,
     "notices": 0,
     "records": 0,
     "errors": 0,
-    "warnings": 0,
+    "warnings": 1,
     "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1353",
+    "name": "Kaufungen",
+    "state_code": "HE",
+    "ars": "066330015015",
+    "status": "download_disabled",
+    "route": "epaper",
+    "stale": false,
+    "newest_issue": "44/2026",
+    "issues_processed": [],
+    "issues_failed": [],
+    "articles_seen": 0,
+    "notices": 0,
+    "records": 0,
+    "errors": 0,
+    "warnings": 1,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1391",
+    "name": "Vellmarer Blättchen",
+    "state_code": "HE",
+    "ars": "066330026026",
+    "status": "ok",
+    "route": "epaper",
+    "stale": false,
+    "newest_issue": "22/2026",
+    "issues_processed": [
+     "22/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 99,
+    "notices": 1,
+    "records": 1,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 1,
     "updated": 0,
     "unchanged": 0
    },
@@ -102,6 +150,7 @@
     "state_code": "TH",
     "ars": "160735051038",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "10/2026",
     "issues_processed": [
@@ -113,7 +162,7 @@
     "records": 2,
     "errors": 0,
     "warnings": 0,
-    "inserted": 0,
+    "inserted": 2,
     "updated": 0,
     "unchanged": 0
    },
@@ -123,18 +172,19 @@
     "state_code": "TH",
     "ars": "160735005067",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "11/2026",
     "issues_processed": [
      "11/2026"
     ],
     "issues_failed": [],
-    "articles_seen": 29,
+    "articles_seen": 28,
     "notices": 7,
     "records": 7,
     "errors": 0,
-    "warnings": 0,
-    "inserted": 0,
+    "warnings": 1,
+    "inserted": 7,
     "updated": 0,
     "unchanged": 0
    },
@@ -144,6 +194,7 @@
     "state_code": "TH",
     "ars": "160750133133",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "3/2026",
     "issues_processed": [
@@ -155,7 +206,7 @@
     "records": 4,
     "errors": 0,
     "warnings": 0,
-    "inserted": 0,
+    "inserted": 4,
     "updated": 0,
     "unchanged": 0
    },
@@ -165,6 +216,7 @@
     "state_code": "SN",
     "ars": "146285209080",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "10/2026",
     "issues_processed": [
@@ -176,7 +228,7 @@
     "records": 17,
     "errors": 0,
     "warnings": 0,
-    "inserted": 0,
+    "inserted": 17,
     "updated": 0,
     "unchanged": 0
    },
@@ -186,6 +238,7 @@
     "state_code": "SN",
     "ars": "146280160160",
     "status": "ok",
+    "route": "online",
     "stale": false,
     "newest_issue": "20/2026",
     "issues_processed": [
@@ -197,49 +250,54 @@
     "records": 9,
     "errors": 0,
     "warnings": 0,
-    "inserted": 0,
+    "inserted": 9,
     "updated": 0,
     "unchanged": 0
    }
   ]
  },
  "classification": {
-  "articles_seen": 293,
-  "notices": 48,
+  "articles_seen": 413,
+  "notices": 49,
   "by_tier": {
-   "weak:skipped": 96,
-   "excluded:skipped": 149,
-   "weak:notice": 25,
+   "weak:skipped": 139,
+   "excluded:skipped": 225,
+   "weak:notice": 26,
    "strong:notice": 23
   },
   "top_reasons": {
-   "weak_section_no_cue": 96,
+   "weak_section_no_cue": 139,
    "excluded_section:nichtamtlich": 55,
+   "excluded_headline:\\be\\. ?v\\.": 39,
+   "excluded_section:\\bkirchen?\\b": 27,
    "strong_section:\\bamtlich(e|er|es)? (bekanntmachung|mitteilung|teil)": 22,
-   "excluded_headline:\\be\\. ?v\\.": 21,
-   "excluded_headline:sprechstunde": 11,
-   "excluded_section:\\bkirchen?\\b": 10,
+   "excluded_headline:sprechstunde": 12,
+   "excluded_headline:öffnungszeiten": 9,
    "weak_section+category:sitzung": 9,
+   "excluded_section:\\bvereine?\\b": 9,
+   "weak_section+cue:bekanntmach": 7,
    "excluded_section:sonstige": 7,
-   "weak_section+cue:bekanntmach": 6,
-   "excluded_headline:öffnungszeiten": 5,
-   "weak_section+cue:bekanntgabe": 5,
-   "excluded_section:leben in": 5,
-   "excluded_section:volkshochschule": 4,
-   "excluded_headline:sprechzeit": 3,
-   "excluded_headline:gedenken": 3
+   "excluded_section:\\bkultur": 7,
+   "excluded_section:\\bsport": 6,
+   "excluded_headline:sprechzeit": 5,
+   "excluded_section:\\bkinder": 5
   }
  },
  "records": {
-  "total": 48,
+  "total": 49,
   "by_state": {
    "RP": 9,
+   "HE": 1,
    "TH": 13,
    "SN": 26
   },
+  "by_source": {
+   "wittich_ol": 48,
+   "wittich_epaper": 1
+  },
   "by_category": {
    "general": 10,
-   "sitzung": 27,
+   "sitzung": 28,
    "verkehr": 1,
    "zustellung_justiz": 1,
    "vergabe_stelle": 2,
@@ -248,13 +306,17 @@
    "umwelt_sicherheit": 2
   },
   "by_geo_status": {
-   "resolved": 48
+   "resolved": 48,
+   "fallback_publication_area": 1
   },
   "by_geo_precision": {
    "municipal_association": 6,
-   "municipality": 42
+   "municipality": 43
   },
-  "quality_flags": {},
+  "quality_flags": {
+   "geo_fallback_publication_area": 1,
+   "issue_level_date": 1
+  },
   "missing": {
    "published_on": 0,
    "body_text": 0,
@@ -263,40 +325,80 @@
   },
   "published_on_range": [
    "2026-09-06",
-   "2026-10-25"
+   "2026-10-30"
   ]
  },
- "load": null,
+ "load": {
+  "inserted": 49,
+  "updated": 0,
+  "unchanged": 0
+ },
  "errors": {
-  "total": 2,
+  "total": 5,
   "by_severity": {
-   "warning": 2
+   "warning": 5
   },
   "by_stage_code": {
-   "validate:toc_duplicate_entries": 2
+   "validate:toc_duplicate_entries": 3,
+   "validate:epaper_download_disabled": 2
   },
   "sample": []
  },
- "locations_needing_review": [],
+ "locations_needing_review": [
+  {
+   "source_record_id": "1391-2026-22-p016-8e3e35890f",
+   "title": "Einladung zur Sitzung der Stadtverordnetenversammlung Vellmar am Montag, 02.11.2026",
+   "geo_status": "fallback_publication_area",
+   "place_text": null,
+   "fallback_area": "Vellmar",
+   "note": "located at publication area Stadt Vellmar (066330026026)"
+  }
+ ],
  "catalogue": {
-  "created_at": "2026-10-28T13:50:35+00:00",
-  "titles_found": 193,
-  "in_scope": 147,
+  "created_at": "2026-10-28T15:14:07+00:00",
+  "titles_found": 1490,
+  "in_scope": 741,
   "in_scope_by_state": {
-   "RP": 18,
-   "HE": 2,
-   "TH": 35,
-   "SN": 92
+   "RP": 155,
+   "HE": 264,
+   "TH": 155,
+   "SN": 167
   },
   "excluded_reasons": {
-   "out_of_state_scope": 5,
-   "excluded_title": 33,
-   "excluded_frequency": 8
+   "excluded_title": 335,
+   "out_of_state_scope": 365,
+   "excluded_frequency": 49
   },
-  "prefixes_queried": 4,
-  "saturated_prefixes": [],
+  "prefixes_queried": 279,
+  "saturated_prefixes": [
+   "01",
+   "02",
+   "04",
+   "06",
+   "07",
+   "08",
+   "34",
+   "35",
+   "36",
+   "37",
+   "54",
+   "55",
+   "66",
+   "67",
+   "96",
+   "98",
+   "99",
+   "018",
+   "048",
+   "049",
+   "342",
+   "343",
+   "361",
+   "362",
+   "363"
+  ],
   "overview_titles_in_scope": 119,
-  "overview_titles_found_by_sweep": 27,
+  "overview_titles_found_by_sweep": 117,
   "errors": {
    "validate:search_saturated": 1
   }

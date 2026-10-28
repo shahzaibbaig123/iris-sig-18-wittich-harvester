@@ -61,6 +61,18 @@ stale_after_years = 1
 # Optional allow-list of title ids; empty means every in-scope title.
 titles = []
 
+[epaper]
+# Titles without an online edition (most of Hessen): read the e-paper's
+# complete-issue PDF, but only where the viewer offers readers that download
+# (save_complete_enabled, not a /preview/ catalogue).
+enabled = true
+max_pdf_mb = 40
+# Font-size ratios to the page's body text: headline and section heading.
+headline_ratio = 1.2
+section_ratio = 1.6
+# PDFs are large; by default an issue already harvested is not downloaded again.
+reread_same_issue = false
+
 [filter]
 signal_type = "municipal_notice"
 # Sections named after a place ("Ortsgemeinde X", "Stadt X", "VG X") are

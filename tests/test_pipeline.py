@@ -22,7 +22,7 @@ def test_offline_run_produces_traceable_notices(run_harvest):
     assert result.status == "succeeded"
     assert {k: t.status for k, t in titles.items()} == {
         "130": "ok",
-        "1329": "no_online_edition",  # Hessen title without an online edition
+        "1329": "download_disabled",  # Hessen, e-paper only, newest issue a preview without download
         "1740": "ok",
         "2701": "ok",
     }
@@ -33,9 +33,13 @@ def test_offline_run_produces_traceable_notices(run_harvest):
         assert r.published_on is not None and r.title and r.body_text
         assert r.geo_status == "resolved" and r.x is not None
         assert len(r.content_hash) == 64
-    # Only notices are fetched in full: 128 listed articles, 37 requests in total.
+    # Only notices are fetched in full: 128 listed articles, 39 requests in total
+    # (37 on ol.wittich.de; robots.txt and the viewer page on epaper.wittich.de).
     assert sum(t.articles_seen for t in result.titles) == 128
-    assert result.requests == len(transport.calls) == 37
+    assert result.requests == len(transport.calls) == 39
+    disabled = titles["1329"]
+    assert disabled.route == "epaper" and not disabled.records
+    assert [e.code for e in disabled.errors] == ["epaper_download_disabled"]
 
 
 def test_offline_run_is_deterministic(run_harvest):

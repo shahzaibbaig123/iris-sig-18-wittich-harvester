@@ -59,6 +59,15 @@ class HarvestSettings:
 
 
 @dataclass(frozen=True)
+class EpaperSettings:
+    enabled: bool = True
+    max_pdf_mb: float = 40.0
+    headline_ratio: float = 1.2
+    section_ratio: float = 1.6
+    reread_same_issue: bool = False
+
+
+@dataclass(frozen=True)
 class Category:
     name: str
     pattern: re.Pattern[str]
@@ -94,6 +103,7 @@ class Settings:
     harvest: HarvestSettings
     filter: FilterSettings
     geo: GeoSettings
+    epaper: EpaperSettings = field(default_factory=EpaperSettings)
     database_url: str | None = None
     raw: dict = field(default_factory=dict, compare=False, repr=False)
 
@@ -185,6 +195,7 @@ def load_settings(
             envelope=tuple(float(v) for v in geo["envelope"]),
             state_bbox_buffer_m=float(geo["state_bbox_buffer_m"]),
         ),
+        epaper=EpaperSettings(**data.get("epaper", {})),
         database_url=env.get("DATABASE_URL") or None,
         raw=data,
     )

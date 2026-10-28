@@ -50,7 +50,11 @@ SELECT source_record_id
 FROM iris_staging.signal_ingest
 WHERE coalesce(trim(title), '') = ''
    OR coalesce(trim(source_url), '') = ''
-   OR source_url !~ '^https://ol\.wittich\.de/titel/[0-9]+/ausgabe/[0-9]+/[0-9]{4}/artikel/'
+   OR (source_system = 'wittich_ol'
+       AND source_url !~ '^https://ol\.wittich\.de/titel/[0-9]+/ausgabe/[0-9]+/[0-9]{4}/artikel/')
+   OR (source_system = 'wittich_epaper'
+       AND source_url !~ '^https://epaper\.wittich\.de/frontend/catalogs/[0-9]+/[0-9]+/pdf/complete\.pdf#page=[0-9]+$')
+   OR source_system NOT IN ('wittich_ol', 'wittich_epaper')
    OR signal_type <> 'municipal_notice';
 
 -- check: missing_date_not_flagged

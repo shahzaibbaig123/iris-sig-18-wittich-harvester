@@ -9,12 +9,16 @@ Per title:
      count is reached or a page comes back empty.
   4. One article page supplies the issue manifest: per-article date and
      section. Only articles classified as notices are fetched in full.
+Titles without an online edition go to the e-paper route (pattern B, PDF):
+the newest complete-issue PDF is read where the viewer offers it for
+download, and segmented into blocks (see parsers/epaper.py).
 A failing issue never stops the title, and a failing title never stops the
 run; both are recorded as errors and reflected in the run status.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import traceback
@@ -32,12 +36,16 @@ from wittich_harvester.load import Cursor, LoadCounts, LoadError, Store
 from wittich_harvester.normalize import ErrorRecord, SignalRecord, date_flags, dedupe, headline_flags
 from wittich_harvester.parsers import ParseError
 from wittich_harvester.parsers.article import ArticlePage, ManifestItem, parse_article
+from wittich_harvester.parsers.epaper import PdfBlock, PdfIssue, parse_pdf_issue, parse_viewer
 from wittich_harvester.parsers.issue import ArticleStub, TocPage, parse_toc
 
 log = logging.getLogger(__name__)
 
 Issue = tuple[int, int]  # (issue_number, issue_year)
 MANIFEST_ATTEMPTS = 3
+EPAPER_SOURCE = "wittich_epaper"
+# Statuses for titles where nothing was there to harvest (not failures).
+NOTHING_TO_HARVEST = ("no_online_edition", "download_disabled", "up_to_date")
 
 
 def _order(issue: Issue) -> tuple[int, int]:
@@ -53,7 +61,8 @@ class IssueFailed(Exception):
 @dataclass
 class TitleHarvest:
     title: CatalogueTitle
-    status: str = "ok"  # ok | partial | failed | no_online_edition
+    status: str = "ok"  # ok | partial | failed | no_online_edition | download_disabled | up_to_date
+    route: str = "online"  # online (HTML) | epaper (PDF)
     newest_issue: Issue | None = None
     issues_selected: list[Issue] = field(default_factory=list)
     issues_processed: list[Issue] = field(default_factory=list)
@@ -74,6 +83,7 @@ class TitleHarvest:
             "state_code": self.title.state_code,
             "ars": self.title.ars,
             "status": self.status,
+            "route": self.route,
             "stale": self.stale,
             "newest_issue": fmt(self.newest_issue),
             "issues_processed": [fmt(i) for i in self.issues_processed],
@@ -132,6 +142,9 @@ class Harvester:
 
     def newest_url(self, title_id: str) -> str:
         return f"{self.settings.base_url}/internal/neuste/ausgabe/{title_id}"
+
+    def epaper_viewer_url(self, title_id: str) -> str:
+        return f"{self.settings.epaper_base_url}/frontend/mvc/catalog/by-name/{title_id}/newest"
 
     def toc_url(self, title_id: str, issue: Issue, page: int) -> str:
         nr, year = issue
@@ -198,6 +211,8 @@ class Harvester:
         except json.JSONDecodeError as exc:
             return self._fail(out, ErrorRecord("parse", "malformed_json", f"newest-issue answer is not JSON: {exc}", source_url=url))
         if not data:
+            if self.settings.epaper.enabled:
+                return self.harvest_epaper(title, cursor, out)
             out.status = "no_online_edition"
             return out
         try:
@@ -243,6 +258,149 @@ class Harvester:
         elif out.issues_failed or any(e.severity == "error" for e in out.errors):
             out.status = "partial"
         return out
+
+    # -- e-paper (PDF) --------------------------------------------------------
+
+    def harvest_epaper(self, title: CatalogueTitle, cursor: Cursor | None, out: TitleHarvest) -> TitleHarvest:
+        out.route = "epaper"
+        cfg = self.settings.epaper
+        url = self.epaper_viewer_url(title.title_id)
+        try:
+            viewer = parse_viewer(self.client.get(url).text)
+        except FetchError as exc:
+            if exc.status == 404:  # no e-paper either
+                out.status = "no_online_edition"
+                return out
+            return self._fail(out, ErrorRecord(_stage(exc), exc.code, str(exc), source_url=url))
+        except ParseError as exc:
+            return self._fail(out, ErrorRecord("parse", exc.code, str(exc), source_url=url))
+        issue: Issue = (viewer.issue_number, viewer.issue_year)
+        out.newest_issue = issue
+        out.stale = issue[1] < self.today.year - self.settings.harvest.stale_after_years
+        if not viewer.downloadable:
+            out.status = "download_disabled"
+            out.errors.append(
+                ErrorRecord(
+                    "validate",
+                    "epaper_download_disabled",
+                    f"issue {issue[0]}/{issue[1]} is not offered for download "
+                    f"({'preview catalogue' if viewer.preview else 'save_complete_enabled=false'}); not harvested",
+                    "warning",
+                    url,
+                )
+            )
+            return out
+        if cursor is not None and _order(issue) <= cursor.key and not cfg.reread_same_issue:
+            out.status = "up_to_date"
+            return out
+
+        pdf_url = f"{self.settings.epaper_base_url}{viewer.complete_pdf_path}"
+        out.issues_selected = [issue]
+        try:
+            response = self.client.get(pdf_url)
+        except FetchError as exc:
+            out.issues_failed.append(issue)
+            return self._fail(out, ErrorRecord(_stage(exc), exc.code, str(exc), source_url=pdf_url))
+        if len(response.content) > cfg.max_pdf_mb * 1024 * 1024:
+            out.issues_failed.append(issue)
+            return self._fail(
+                out,
+                ErrorRecord("fetch", "pdf_too_large", f"{len(response.content)} bytes exceeds max_pdf_mb={cfg.max_pdf_mb}", source_url=pdf_url),
+            )
+        try:
+            pdf = parse_pdf_issue(response.content, cfg.headline_ratio, cfg.section_ratio)
+        except ParseError as exc:
+            out.issues_failed.append(issue)
+            return self._fail(out, ErrorRecord("parse", exc.code, str(exc), source_url=pdf_url))
+        if pdf.issue_date is None:
+            out.errors.append(
+                ErrorRecord("parse", "pdf_issue_date_missing", "no issue date found in the masthead", "warning", pdf_url)
+            )
+
+        out.articles_seen = len(pdf.blocks)
+        seen: Counter = Counter()
+        for block in pdf.blocks:
+            decision = classify(block.section, block.headline, block.body[:400], self.settings.filter)
+            self.decisions[decision.reason] += 1
+            self.tiers[f"{decision.tier}:{'notice' if decision.is_notice else 'skipped'}"] += 1
+            if not decision.is_notice:
+                continue
+            out.notices += 1
+            key = hashlib.sha1(f"{block.page}|{block.headline}".encode("utf-8")).hexdigest()[:10]
+            seen[key] += 1
+            suffix = f"-{seen[key]}" if seen[key] > 1 else ""
+            source_record_id = f"{title.title_id}-{issue[1]}-{issue[0]}-p{block.page:03d}-{key}{suffix}"
+            out.records.append(self._pdf_record(title, issue, pdf_url, pdf, block, source_record_id, decision, out))
+        out.issues_processed = [issue]
+        out.cursor = Cursor(issue[1], issue[0], pdf.issue_date)
+        return out
+
+    def _pdf_record(
+        self,
+        title: CatalogueTitle,
+        issue: Issue,
+        pdf_url: str,
+        pdf: PdfIssue,
+        block: PdfBlock,
+        source_record_id: str,
+        decision: NoticeDecision,
+        out: TitleHarvest,
+    ) -> SignalRecord:
+        url = f"{pdf_url}#page={block.page}"
+        flags = ["issue_level_date"] + date_flags(pdf.issue_date, None, issue[1])
+        if not block.section:
+            flags.append("missing_section")
+        if not block.body:
+            flags.append("empty_body")
+        geo = self.resolver.resolve(title.state_code, title.ars, block.section, "")
+        if geo.status != "resolved":
+            flags.append(f"geo_{geo.status}")
+        if geo.status in ("invalid", "ambiguous", "unresolved"):
+            out.errors.append(
+                ErrorRecord(
+                    "geo",
+                    "invalid_coordinates" if geo.status == "invalid" else f"location_{geo.status}",
+                    geo.note or geo.status,
+                    "warning",
+                    url,
+                    source_record_id,
+                )
+            )
+        record = SignalRecord(
+            source_system=EPAPER_SOURCE,
+            source_record_id=source_record_id,
+            source_url=url,
+            signal_type=self.settings.filter.signal_type,
+            notice_category=decision.category,
+            title=block.headline,
+            summary=block.body[:300] or None,
+            body_text=block.body or None,
+            published_on=pdf.issue_date,
+            section=block.section or None,
+            publication_id=title.title_id,
+            publication_title=title.overview_name or title.name,
+            issue_number=issue[0],
+            issue_year=issue[1],
+            issue_url=pdf_url,
+            state_code=title.state_code,
+            ars=geo.ars or title.ars,
+            municipality_name=geo.municipality_name,
+            place_text=geo.place_text,
+            x=geo.x,
+            y=geo.y,
+            geo_precision=geo.precision,
+            geo_status=geo.status,
+            geo_note=geo.note,
+            quality_flags=sorted(set(flags)),
+            raw={
+                "pdf": {"page": block.page, "document_title": pdf.document_title, "masthead": pdf.masthead, "pages": pdf.pages},
+                "decision": {"tier": decision.tier, "reason": decision.reason},
+                "title": {"id": title.title_id, "name": title.name, "ars": title.ars, "frequency": title.frequency},
+                "geo": {"note": geo.note, "candidates": geo.candidates},
+            },
+        )
+        record.compute_hash()
+        return record
 
     def select_issues(self, available: list[Issue], cursor: Cursor | None, out: TitleHarvest) -> list[Issue]:
         """``available`` is newest first."""
@@ -517,7 +675,7 @@ def _stage(exc: FetchError) -> str:
 def run_status(result: RunResult) -> str:
     if not result.titles:
         return "failed"  # nothing to harvest: discovery failed or the filter matched nothing
-    harvested = [t for t in result.titles if t.status != "no_online_edition"]
+    harvested = [t for t in result.titles if t.status not in NOTHING_TO_HARVEST]
     if harvested and all(t.status == "failed" for t in harvested):
         return "failed"
     if any(t.status in ("failed", "partial") for t in result.titles):

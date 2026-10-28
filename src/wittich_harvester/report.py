@@ -42,6 +42,7 @@ def build_report(result: RunResult, catalogue: Catalogue | None, mode: str) -> d
         "records": {
             "total": len(records),
             "by_state": dict(Counter(r.state_code for r in records)),
+            "by_source": dict(Counter(r.source_system for r in records)),
             "by_category": dict(Counter(r.notice_category for r in records)),
             "by_geo_status": dict(Counter(r.geo_status for r in records)),
             "by_geo_precision": dict(Counter(r.geo_precision or "none" for r in records)),
@@ -131,12 +132,12 @@ def render_markdown(report: dict) -> str:
         "",
         f"Status: {_kv(titles['by_status'])}." + (f" Stale (no recent issue): {', '.join(titles['stale'])}." if titles["stale"] else ""),
         "",
-        "| Title | State | Status | Newest | Issues read | Articles | Notices | Records | Errors | Warnings |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "| Title | State | Route | Status | Newest | Issues read | Articles/blocks | Notices | Records | Errors | Warnings |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for t in titles["detail"]:
         lines.append(
-            f"| {t['title_id']} {t['name']} | {t['state_code']} | {t['status']} | {t['newest_issue'] or '-'} | "
+            f"| {t['title_id']} {t['name']} | {t['state_code']} | {t['route']} | {t['status']} | {t['newest_issue'] or '-'} | "
             f"{', '.join(t['issues_processed']) or '-'} | {t['articles_seen']} | {t['notices']} | {t['records']} | "
             f"{t['errors']} | {t['warnings']} |"
         )
@@ -149,7 +150,7 @@ def render_markdown(report: dict) -> str:
         "",
         f"{cls['articles_seen']} articles listed, {cls['notices']} classified as notices, {rec['total']} records.",
         "",
-        f"- By state: {_kv(rec['by_state'])}",
+        f"- By state: {_kv(rec['by_state'])}; by source: {_kv(rec['by_source'])}",
         f"- By category: {_kv(rec['by_category'])}",
         f"- Geo status: {_kv(rec['by_geo_status'])}; precision: {_kv(rec['by_geo_precision'])}",
         f"- Missing fields: {_kv(rec['missing'])}",
