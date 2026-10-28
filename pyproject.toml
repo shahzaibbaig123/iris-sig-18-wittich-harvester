@@ -1,0 +1,37 @@
+[project]
+name = "iris-sig-18-wittich-harvester"
+version = "0.1.0"
+description = "IRIS-SIG-18: harvest municipal notices from LINUS WITTICH online gazettes (RP, HE, TH, SN) into iris_staging.signal_ingest"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "lxml>=5.0",
+    "psycopg[binary]>=3.2",
+    "requests>=2.32",
+]
+
+[project.scripts]
+wittich-harvester = "wittich_harvester.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+# Only needed to rebuild data/gazetteer from the BKG VG250 GeoPackage.
+gazetteer = [
+    "shapely>=2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wittich_harvester"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: needs a PostGIS database in IRIS_TEST_DATABASE_URL (skipped otherwise)",
+]

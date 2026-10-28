@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+
+# Run workspaces, caches and raw downloads (VG250 GeoPackage, captured HTML)
+data/*
+!data/gazetteer/

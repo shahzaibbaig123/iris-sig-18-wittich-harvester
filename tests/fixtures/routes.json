@@ -1,0 +1,140 @@
+{
+ "_comment": "URL path -> canned response for FixtureTransport (wittich-harvester --offline and tests).",
+ "routes": {
+  "/robots.txt": {
+   "file": "robots/ol_robots.txt",
+   "headers": {
+    "Content-Type": "text/plain"
+   }
+  },
+  "/internal/typ/ZIP/begriff/76": {
+   "file": "search/zip_76.html"
+  },
+  "/internal/typ/ZIP/begriff/07": {
+   "file": "search/zip_07.html"
+  },
+  "/internal/typ/ZIP/begriff/01809": {
+   "file": "search/zip_01809.html"
+  },
+  "/internal/typ/ZIP/begriff/34233": {
+   "file": "search/zip_34233.html"
+  },
+  "/uebersicht": {
+   "file": "search/uebersicht.html"
+  },
+  "/internal/neuste/ausgabe/130": {
+   "body": "{\"title\":130,\"year\":2026,\"issue\":43}",
+   "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+   }
+  },
+  "/internal/neuste/ausgabe/1740": {
+   "body": "{\"title\":1740,\"year\":2026,\"issue\":11}",
+   "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+   }
+  },
+  "/internal/neuste/ausgabe/2701": {
+   "body": "{\"title\":2701,\"year\":2026,\"issue\":20}",
+   "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+   }
+  },
+  "/internal/neuste/ausgabe/1329": {
+   "body": "{}",
+   "headers": {
+    "Content-Type": "application/json; charset=utf-8"
+   }
+  },
+  "/titel/130/ausgabe/43/2026/rubrik/alle/seite/0/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_130_43_2026_p0.html"
+  },
+  "/titel/130/ausgabe/43/2026/rubrik/alle/seite/1/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_130_43_2026_p1.html"
+  },
+  "/titel/130/ausgabe/43/2026/rubrik/alle/seite/2/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_130_43_2026_p2.html"
+  },
+  "/titel/130/ausgabe/43/2026/rubrik/alle/seite/3/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_130_43_2026_p3.html"
+  },
+  "/titel/130/ausgabe/43/2026/rubrik/alle/seite/4/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_130_43_2026_p4.html"
+  },
+  "/titel/1740/ausgabe/11/2026/rubrik/alle/seite/0/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_1740_11_2026_p0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/rubrik/alle/seite/1/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_1740_11_2026_p1.html"
+  },
+  "/titel/2701/ausgabe/20/2026/rubrik/alle/seite/0/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_2701_20_2026_p0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/rubrik/alle/seite/1/sortiert/inhaltsverzeichnis": {
+   "file": "pages/toc_2701_20_2026_p1.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055202406-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055202406-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204473-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204473-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204476-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204476-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204479-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204479-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204482-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204482-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204485-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204485-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204488-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204488-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204491-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204491-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204497-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204497-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/2701/ausgabe/20/2026/artikel/00000000000055204500-OL-2701-2026-43-20-0": {
+   "file": "pages/art_00000000000055204500-OL-2701-2026-43-20-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055242105-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055242105-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244175-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244175-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244493-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244493-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244499-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244499-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244541-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244541-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244544-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244544-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/1740/ausgabe/11/2026/artikel/00000000000055244565-OL-1740-2026-43-11-0": {
+   "file": "pages/art_00000000000055244565-OL-1740-2026-43-11-0.html"
+  },
+  "/titel/130/ausgabe/43/2026/artikel/00000000000055313196-OL-130-2026-43-43-0": {
+   "file": "pages/art_00000000000055313196-OL-130-2026-43-43-0.html"
+  },
+  "/titel/130/ausgabe/43/2026/artikel/00000000000055313205-OL-130-2026-43-43-0": {
+   "file": "pages/art_00000000000055313205-OL-130-2026-43-43-0.html"
+  },
+  "/titel/130/ausgabe/43/2026/artikel/00000000000055313217-OL-130-2026-43-43-0": {
+   "file": "pages/art_00000000000055313217-OL-130-2026-43-43-0.html"
+  },
+  "/titel/130/ausgabe/43/2026/artikel/00000000000055321389-OL-130-2026-43-43-0": {
+   "file": "pages/art_00000000000055321389-OL-130-2026-43-43-0.html"
+  }
+ }
+}

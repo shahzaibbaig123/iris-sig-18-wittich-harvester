@@ -1,0 +1,13 @@
+# Overlay merged over config/harvester.toml by `wittich-harvester --offline`
+# and the end-to-end tests. It limits discovery and harvesting to what
+# routes.json can answer; every other setting stays as configured.
+
+[discovery]
+# 76 = RP (Jockgrim), 07 = TH (Schiefergebirge, saturated on purpose),
+# 01809 = SN (Heidenau), 34233 = HE (Fuldatal, no online edition).
+zip_prefixes = ["76", "07", "01809", "34233"]
+max_prefix_length = 2
+use_overview = false
+
+[harvest]
+titles = ["130", "1329", "1740", "2701"]

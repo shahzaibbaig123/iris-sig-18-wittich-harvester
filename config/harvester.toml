@@ -1,0 +1,154 @@
+# IRIS-SIG-18 harvester configuration.
+# Secrets and operator contact come from the environment (see .env.example).
+
+[source]
+system = "wittich_ol"
+base_url = "https://ol.wittich.de"
+epaper_base_url = "https://epaper.wittich.de"
+
+[http]
+# "{contact}" is replaced by $WITTICH_CONTACT; without it the parenthesised
+# contact part is dropped and live runs log a warning.
+# The product token must not contain any agent name the robots.txt files
+# block: ol.wittich.de lists ~1000 bots, among them "harvest" and "es", so
+# "IRIS-SignalHarvester" or "python-requests" would be refused (see README).
+user_agent = "IRIS-GazetteBot/0.1 (+mailto:{contact})"
+min_interval_seconds = 1.0
+timeout_seconds = 30
+max_retries = 3
+backoff_base_seconds = 2.0
+rate_limit_base_seconds = 30.0
+respect_robots = true
+
+[scope]
+# Federal states in scope, by ARS prefix: 07 RP, 06 HE, 16 TH, 14 SN.
+states = ["RP", "HE", "TH", "SN"]
+
+[discovery]
+# Two-digit postcode zones that touch the four states. The sweep narrows a
+# prefix by one digit whenever a result page is saturated.
+zip_prefixes = [
+    "01", "02", "04", "06", "07", "08", "09",
+    "34", "35", "36", "37",
+    "53", "54", "55", "56", "57",
+    "60", "61", "63", "64", "65", "66", "67", "68", "69",
+    "76", "96", "98", "99",
+]
+saturation_threshold = 40
+max_prefix_length = 4
+use_overview = true
+# Titles that are not gazettes: app feeds, special prints, classifieds,
+# guides, print jobs. Matched case-insensitively against the title name.
+exclude_title_patterns = [
+    "^meinOrt\\b", "^SD\\b", "Kleinanzeigen", "Sportplaner", "Kalender",
+    "Veranstaltungs", "-ALT-", "Heimatfest", "Ortsbuch", "Ausbildungsratgeber",
+    "^Treffpunkt", "Druckauftr", "Reisejournal", "Infobrosch", "Jubiläumsausgabe",
+    "^TOP-Unternehmen",
+]
+exclude_frequencies = ["1 x im Jahr", "2 x im Jahr", "3 x im Jahr", "täglich"]
+catalogue_max_age_days = 7
+
+[harvest]
+# First run per title: how many of the newest issues to read.
+initial_issues = 1
+# Later runs: issues newer than the cursor, plus this many already-seen
+# issues again (late corrections), capped at max_issues_per_title.
+overlap_issues = 1
+max_issues_per_title = 4
+max_toc_pages = 30
+# A title whose newest online issue is older than this is reported as stale.
+stale_after_years = 1
+# Optional allow-list of title ids; empty means every in-scope title.
+titles = []
+
+[filter]
+signal_type = "municipal_notice"
+# Sections named after a place ("Ortsgemeinde X", "Stadt X", "VG X") are
+# never matched against excluded_sections, since place names such as
+# "Kirchen (Sieg)" or "Kirchheim" would otherwise collide with them.
+place_section_prefix = "^(ortsgemeinde|gemeinde|stadt|verbandsgemeinde|vg|verwaltungsgemeinschaft|ortsteil|ortsbezirk|ortschaft|markt|amt)\\s+\\S"
+
+# Sections whose items are notices unless the headline is excluded. Mixed
+# sections ("Gemeinsame Informationen und Bekanntmachungen") are not strong:
+# they also carry club and event news, so their items need a cue.
+strong_sections = [
+    "\\bamtlich(e|er|es)? (bekanntmachung|mitteilung|teil)",
+    "^amtliches\\b",
+    "^((amtliche|öffentliche|ortsübliche) )?bekanntmachungen\\b",
+    "andere beh(ö|oe)rden",
+    "^beh(ö|oe)rden",
+]
+# Sections that never hold notices. "Nichtamtlich" is checked before the
+# strong sections, so "Nichtamtlicher Teil" never counts as "amtlicher Teil".
+excluded_sections = [
+    "nichtamtlich", "\\bkirchen?\\b", "kirchlich", "\\bpfarr", "\\bvereine?\\b",
+    "vereinsleben", "\\bsport", "\\bkultur", "freizeit", "\\bkinder", "familie",
+    "\\bschulen?\\b", "\\bkitas?\\b", "kindertages", "volkshochschule",
+    "bibliothek", "parteien", "fraktion", "sonstige", "wissenswertes",
+    "wichtiges auf einen blick", "öffnungszeiten", "bereitschaftsdienst",
+    "notdienst", "wo entsorge", "inhaltsverzeichnis", "anzeigen", "leben in",
+    "veranstaltung", "senioren", "jubil", "glückw",
+]
+# Headlines that are never notices, in any section.
+excluded_headlines = [
+    "redaktionsschluss", "glückwünsch", "geburtstag", "jubilar", "nachruf",
+    "gedenken", "notruf", "bereitschaftsdienst", "öffnungszeiten", "sprechzeit",
+    "sprechstunde", "kontaktdaten", "inhaltsverzeichnis", "freundlicher hinweis",
+    "\\be\\. ?v\\.", "\\bverein\\b", "mitgliederversammlung", "generalversammlung",
+]
+# Every other section (place sections such as "Ortsgemeinde X", or "Aus dem
+# Rathaus") is weak: an item counts only if it carries a notice cue, or its
+# headline matches a category pattern below.
+# Cues naming a legal act count in the headline or the teaser.
+notice_cues = [
+    "bekanntmach", "bekanntgabe", "bekannt gemacht", "öffentliche sitzung",
+    "satzung", "allgemeinverfügung",
+]
+# Cues naming an authority, or ambiguous words, count in the headline only:
+# a club item may mention the Kreisverwaltung, and "Verordnung" is also a
+# doctor's prescription.
+headline_cues = [
+    "amtsgericht", "kreisverwaltung", "landratsamt", "verwaltungsgemeinschaft",
+    "zweckverband", "ordnungsamt", "verordnung", "spenden und sponsoring",
+]
+
+# Ordered: the first matching category wins. Case-insensitive regexes,
+# tried against the headline first, then against "headline + teaser".
+[[filter.category]]
+name = "bauleitplanung"
+pattern = "bebauungsplan|flächennutzungsplan|bauleitplan|planfeststellung|veränderungssperre|bauantrag|§ ?36 baugb"
+
+[[filter.category]]
+name = "sitzung"
+pattern = "sitzung|tagesordnung|gremientermin|einwohnerversammlung|bürgerversammlung|beschl(ü|u)ss|\\bausschuss|gemeinderat|stadtrat|kreistag"
+
+[[filter.category]]
+name = "satzung_haushalt"
+pattern = "satzung|haushalt|gebühr|hebesatz|steuer|jahresabschluss|verordnung"
+
+[[filter.category]]
+name = "wahl"
+pattern = "\\bwahl|wählerverzeichnis|briefwahl"
+
+[[filter.category]]
+name = "vergabe_stelle"
+pattern = "ausschreibung|vergabe|stellenangebot"
+
+[[filter.category]]
+name = "verkehr"
+pattern = "vollsperrung|straßensperr|\\bsperrung|umleitung|verkehrsbeschränk|verkehrsrechtlich|baustelle"
+
+[[filter.category]]
+name = "zustellung_justiz"
+pattern = "zustellung|amtsgericht|versteigerung|aufgebot"
+
+[[filter.category]]
+name = "umwelt_sicherheit"
+pattern = "allgemeinverfügung|jagd|schießwarnung|trinkwasser|abwasser|hochwasser|niedrigwasser|ablagerung|kampfmittel"
+
+[geo]
+gazetteer_path = "data/gazetteer/vg250_points_rp_he_th_sn.csv"
+# EPSG:25832 envelope of Germany (minx, miny, maxx, maxy). Matches the DB CHECK.
+envelope = [250000.0, 5200000.0, 950000.0, 6150000.0]
+# A point must also fall inside its state's gazetteer bounding box plus this.
+state_bbox_buffer_m = 5000.0

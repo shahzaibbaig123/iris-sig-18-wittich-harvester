@@ -1,0 +1,62 @@
+# Trimmed copy of https://www.wittich.de/robots.txt captured 2026-10-28:
+# 9 of 1029 groups kept (see tests/fixtures/SOURCE.md).
+
+# Block Baidu Bots
+User-agent: Baiduspider
+Disallow: /
+
+
+User-agent: es
+Disallow: /
+
+
+User-agent: Harvest
+Disallow: /
+
+
+User-agent: Java
+Disallow: /
+
+
+User-agent: Python-urllib
+Disallow: /
+
+
+User-agent: Scrapy
+Disallow: /
+
+
+User-agent: urllib
+Disallow: /
+
+
+User-agent: Wget
+Disallow: /
+
+
+User-agent: *
+
+# L=0 is the default language
+Disallow: /*?L=0*
+Disallow: /*&L=0*
+
+# Disallow all files in 
+Disallow: /typo3/
+Disallow: /typo3conf/
+Allow: /typo3conf/ext/
+Allow: /typo3temp/
+Disallow: /*?id=*
+Disallow: /*?*
+Disallow: /*cHash
+Disallow: /*tx_powermail_pi1
+Disallow: /*tx_form_formframework
+
+
+Sitemap: https://www.wittich.de/sitemap.xml
+Sitemap: https://digital.wittich.de/sitemap.xml
+
+
+
+
+Sitemap: https://www.wittich.de/sitemap.xml
+Sitemap: https://digital.wittich.de/sitemap.xml

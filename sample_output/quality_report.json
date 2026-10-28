@@ -1,0 +1,304 @@
+{
+ "run": {
+  "run_id": "8e747487-92fa-479b-964c-84107c711409",
+  "mode": "live",
+  "status": "succeeded",
+  "started_at": "2026-10-28T13:50:35+00:00",
+  "finished_at": "2026-10-28T13:51:51+00:00",
+  "http_requests": 82,
+  "loaded_to_database": false
+ },
+ "titles": {
+  "harvested": 9,
+  "by_status": {
+   "ok": 7,
+   "no_online_edition": 2
+  },
+  "stale": [],
+  "detail": [
+   {
+    "title_id": "104",
+    "name": "Bellheim",
+    "state_code": "RP",
+    "ars": "073345001",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "43/2026",
+    "issues_processed": [
+     "43/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 59,
+    "notices": 5,
+    "records": 5,
+    "errors": 0,
+    "warnings": 1,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "130",
+    "name": "Jockgrim",
+    "state_code": "RP",
+    "ars": "073345003",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "43/2026",
+    "issues_processed": [
+     "43/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 77,
+    "notices": 4,
+    "records": 4,
+    "errors": 0,
+    "warnings": 1,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "183",
+    "name": "Wörth",
+    "state_code": "RP",
+    "ars": "073340501",
+    "status": "no_online_edition",
+    "stale": false,
+    "newest_issue": null,
+    "issues_processed": [],
+    "issues_failed": [],
+    "articles_seen": 0,
+    "notices": 0,
+    "records": 0,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1329",
+    "name": "Fuldatal",
+    "state_code": "HE",
+    "ars": "066330009009",
+    "status": "no_online_edition",
+    "stale": false,
+    "newest_issue": null,
+    "issues_processed": [],
+    "issues_failed": [],
+    "articles_seen": 0,
+    "notices": 0,
+    "records": 0,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1691",
+    "name": "Gemeinde-Nachrichten",
+    "state_code": "TH",
+    "ars": "160735051038",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "10/2026",
+    "issues_processed": [
+     "10/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 36,
+    "notices": 2,
+    "records": 2,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1740",
+    "name": "Amtsblatt der Verwaltungsgemeinschaft Schiefergebirge",
+    "state_code": "TH",
+    "ars": "160735005067",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "11/2026",
+    "issues_processed": [
+     "11/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 29,
+    "notices": 7,
+    "records": 7,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "1803",
+    "name": "Wurzbacher Stadtkurier / Amts- und Mitteilungsblatt der Stadt Wurzbach",
+    "state_code": "TH",
+    "ars": "160750133133",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "3/2026",
+    "issues_processed": [
+     "3/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 16,
+    "notices": 4,
+    "records": 4,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "2600",
+    "name": "Lokal-Anzeiger | Amtl. Mitteilungsblatt Stadt Dohna und der Gem. Müglitztal",
+    "state_code": "SN",
+    "ars": "146285209080",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "10/2026",
+    "issues_processed": [
+     "10/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 55,
+    "notices": 17,
+    "records": 17,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   },
+   {
+    "title_id": "2701",
+    "name": "Heidenauer Journal - Amtsblatt und Stadtzeitung der Stadt Heidenau",
+    "state_code": "SN",
+    "ars": "146280160160",
+    "status": "ok",
+    "stale": false,
+    "newest_issue": "20/2026",
+    "issues_processed": [
+     "20/2026"
+    ],
+    "issues_failed": [],
+    "articles_seen": 21,
+    "notices": 9,
+    "records": 9,
+    "errors": 0,
+    "warnings": 0,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+   }
+  ]
+ },
+ "classification": {
+  "articles_seen": 293,
+  "notices": 48,
+  "by_tier": {
+   "weak:skipped": 96,
+   "excluded:skipped": 149,
+   "weak:notice": 25,
+   "strong:notice": 23
+  },
+  "top_reasons": {
+   "weak_section_no_cue": 96,
+   "excluded_section:nichtamtlich": 55,
+   "strong_section:\\bamtlich(e|er|es)? (bekanntmachung|mitteilung|teil)": 22,
+   "excluded_headline:\\be\\. ?v\\.": 21,
+   "excluded_headline:sprechstunde": 11,
+   "excluded_section:\\bkirchen?\\b": 10,
+   "weak_section+category:sitzung": 9,
+   "excluded_section:sonstige": 7,
+   "weak_section+cue:bekanntmach": 6,
+   "excluded_headline:öffnungszeiten": 5,
+   "weak_section+cue:bekanntgabe": 5,
+   "excluded_section:leben in": 5,
+   "excluded_section:volkshochschule": 4,
+   "excluded_headline:sprechzeit": 3,
+   "excluded_headline:gedenken": 3
+  }
+ },
+ "records": {
+  "total": 48,
+  "by_state": {
+   "RP": 9,
+   "TH": 13,
+   "SN": 26
+  },
+  "by_category": {
+   "general": 10,
+   "sitzung": 27,
+   "verkehr": 1,
+   "zustellung_justiz": 1,
+   "vergabe_stelle": 2,
+   "satzung_haushalt": 4,
+   "bauleitplanung": 1,
+   "umwelt_sicherheit": 2
+  },
+  "by_geo_status": {
+   "resolved": 48
+  },
+  "by_geo_precision": {
+   "municipal_association": 6,
+   "municipality": 42
+  },
+  "quality_flags": {},
+  "missing": {
+   "published_on": 0,
+   "body_text": 0,
+   "section": 0,
+   "geometry": 0
+  },
+  "published_on_range": [
+   "2026-09-06",
+   "2026-10-25"
+  ]
+ },
+ "load": null,
+ "errors": {
+  "total": 2,
+  "by_severity": {
+   "warning": 2
+  },
+  "by_stage_code": {
+   "validate:toc_duplicate_entries": 2
+  },
+  "sample": []
+ },
+ "locations_needing_review": [],
+ "catalogue": {
+  "created_at": "2026-10-28T13:50:35+00:00",
+  "titles_found": 193,
+  "in_scope": 147,
+  "in_scope_by_state": {
+   "RP": 18,
+   "HE": 2,
+   "TH": 35,
+   "SN": 92
+  },
+  "excluded_reasons": {
+   "out_of_state_scope": 5,
+   "excluded_title": 33,
+   "excluded_frequency": 8
+  },
+  "prefixes_queried": 4,
+  "saturated_prefixes": [],
+  "overview_titles_in_scope": 119,
+  "overview_titles_found_by_sweep": 27,
+  "errors": {
+   "validate:search_saturated": 1
+  }
+ }
+}
